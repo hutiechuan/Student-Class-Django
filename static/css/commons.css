@@ -1,0 +1,89 @@
+.logo{
+            color: white;
+            font-size: 18px;
+            line-height: 48px;
+            width: 200px;
+            text-align: center;
+            border-right: solid 1px white;
+        }
+
+
+        .userinfo{
+            position: absolute;width: 200px;top:48px;right: 0;background-color: white;z-index: 100;line-height: 48px;text-align: center; border: solid 1px #dddddd
+        }
+        
+        .header .rmenus a{
+            display: inline-block;
+            padding: 0 30px;
+            color: white;
+            line-height: 48px;
+            font-size: 18px;
+
+        }
+
+        .header .rmenus a:hover{
+            background-color: black;
+        }
+
+        .left{
+            float: left;
+        }
+
+        .userinfo:hover{
+            display: block;
+        }
+
+        .right{
+            float: right;
+        }
+        body{
+            margin: 0;
+        }
+
+        .header{
+            height: 48px;
+            min-width: 1190px;
+            background-color: #204d74;
+        }
+
+        .avatar .userinfo{
+            display: none;
+        }
+
+        .avatar:hover .userinfo{
+            display: block;
+        }
+
+        .menus{
+            width: 200px;
+            float: left;
+
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            top: 48px;
+            border-right: solid 1px #dddddd;
+        }
+
+        .menus a{
+            display: block;
+            padding: 10px 10px;
+            border: solid 1px #dddddd;
+
+
+        }
+
+        .content{
+            float: left;
+            min-width: 1240px;
+            position: absolute;
+            left: 200px;
+            bottom: 0;
+            top: 48px;
+            overflow: scroll;
+
+        }
+
+        .avatar{
+            position: relative;padding: 0 20px;display: block;
+        }

@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+
+        body{
+            background-color: ghostwhite;
+            margin: 0;
+        }
+
+        .hide{
+            display: none;
+        }
+
+
+        .shadow {
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: black;
+            opacity: 0.4;
+            z-index: 998;
+        }
+
+        .hide{
+            display: none;
+        }
+
+
+        .logo{
+            color: white;
+            font-size: 18px;
+            line-height: 48px;
+            width: 200px;
+            text-align: center;
+            border-right: solid 1px white;
+        }
+
+
+        .userinfo{
+            position: absolute;width: 200px;top:48px;right: 0;background-color: white;z-index: 100;line-height: 48px;text-align: center; border: solid 1px #dddddd
+        }
+
+        .header .rmenus a{
+            display: inline-block;
+            padding: 0 30px;
+            color: white;
+            line-height: 48px;
+            font-size: 18px;
+
+        }
+
+        .header .rmenus a:hover{
+            background-color: black;
+        }
+
+        .left{
+            float: left;
+        }
+
+        .userinfo:hover{
+            display: block;
+        }
+
+        .right{
+            float: right;
+        }
+        {#body{#}
+        {#    margin: 0;#}
+
+
+        .header{
+            height: 48px;
+            min-width: 1190px;
+            background-color: #204d74;
+        }
+
+        .avatar .userinfo{
+            display: none;
+        }
+
+        .avatar:hover .userinfo{
+            display: block;
+        }
+
+        .menus{
+            width: 200px;
+            float: left;
+
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            top: 48px;
+            border-right: solid 1px #dddddd;
+        }
+
+        .menus a{
+            display: block;
+            padding: 10px 10px;
+            border: solid 1px #dddddd;
+
+
+        }
+
+        .content{
+            float: left;
+            min-width: 1240px;
+            position: absolute;
+            left: 200px;
+            bottom: 0;
+            top: 48px;
+            overflow: scroll;
+
+        }
+
+        .avatar{
+            position: relative;padding: 0 20px;display: block;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo left">后台管理</div>
+{#        <div style="position: relative">#}
+
+        <div class="avatar right">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="height: 48px; width: 48px;">
+            <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+            <path fill-rule="evenodd" d="M4.646 7.646a.5.5 0 0 1 .708 0L8 10.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z"/>
+            <path fill-rule="evenodd" d="M8 4.5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+        <div class="userinfo">
+            <a style="color: black">个人资料</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="color: black">注销</a>
+
+        </div>
+        </div>
+
+
+{#        </div>#}
+        <div class="rmenus right">
+            <a>消息</a>
+            <a>邮件</a>
+
+        </div>
+
+    </div>
+
+    <div class="body">
+        <div class="menus">
+            <a HREF="http://127.0.0.1:8000/classes/">班级管理</a>
+            <a HREF="/add_class">班级增加</a>
+            <a HREF="http://127.0.0.1:8000/student/">学生管理</a>
+            <a HREF="http://127.0.0.1:8000/add_student/">学生增加</a>
+        </div>
+        <div class="content">
+
+            <ul class="breadcrumb">
+        <li><a href="#">班级管理</a></li>
+        <li class="active">班级增加</li>
+                <li class="active">学生管理</li>
+        <li class="active">学生增加</li>
+            </ul>
+
+
+             <table style="width: 30%" class="table table-striped table-bordered table-hover">
+    <div>
+        <button type="button" class="btn btn-primary"> <a href="/add_class/" style="color: white">添加</a></button>
+
+    </div>
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>班级名称</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in class_list %}
+                <tr>
+                    <td>{{ row.class_id }}</td>
+                    <td>{{ row.title }}</td>
+                    <td>
+                        <a href="/del_class/?nid={{ row.class_id }}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+</svg></a>
+                        |
+                        &nbsp;<a href="#" onclick="modelEdit(this);"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-brush" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15.213 1.018a.572.572 0 0 1 .756.05.57.57 0 0 1 .057.746C15.085 3.082 12.044 7.107 9.6 9.55c-.71.71-1.42 1.243-1.952 1.596-.508.339-1.167.234-1.599-.197-.416-.416-.53-1.047-.212-1.543.346-.542.887-1.273 1.642-1.977 2.521-2.35 6.476-5.44 7.734-6.411z"/>
+  <path d="M7 12a2 2 0 0 1-2 2c-1 0-2 0-3.5-.5s.5-1 1-1.5 1.395-2 2.5-2a2 2 0 0 1 2 2z"/>
+</svg></a>
+                         <a href="/edit_class/?nid={{ row.class_id }}">编辑</a>
+                        ｜
+                        <a href="#" onclick="showModal();"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z"/>
+  <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/>
+</svg></a>
+                    </td>
+
+
+                </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+    </div>
+
+
+
+    <div id="modal" class="hide" style="position:fixed;background-color: white;height: 300px; width: 300px;left: 50%;
+            top: 50%;margin-top: -100px;margin-left: -100px;border: solid 1px black;z-index: 1000;">
+        <h3 style="text-align: center">
+            添加框
+        </h3>
+        <p></p>
+        <form method="POST" action="/modal_add_class/">
+        <p>
+        班级名: <input type="text" name="title">
+
+        </p>
+
+            <input type="button" value="提交" onclick="AjaxSend();">
+
+            <input type="button" value="取消" onclick="cancelmodal();" >
+        </form>
+    </div>
+    <div id="shadow" class="shadow hide" ></div>
+
+     <div id="editmodal" class="hide" style="position:fixed;background-color: white;height: 300px; width: 300px;margin-top: -100px;left: 50%;
+            top: 50%;margin-left: -100px;border: solid 1px black;z-index: 1000;">
+         <h3 style="text-align: center">编辑框</h3>
+        <p></p>
+        <form method="POST" action="/modal_add_class/">
+        <p>
+            <input id="editid" type="text" name="id" style="display: none">
+            班级名: <input id="edittitle" type="text" name="edittitle">
+
+        </p>
+
+            <input type="button" value="提交" onclick="EditAjaxSend();">
+        </form>
+
+            <input type="button" value="取消" onclick="cancelmodal();" >
+    </div>
+
+
+
+
+
+    <script src="/static/jquery.js"></script>
+    <script>
+        function showModal() {
+            document.getElementById('shadow').classList.remove('hide');
+            document.getElementById('modal').classList.remove('hide');
+
+        }
+
+        function modelEdit(ths) {
+             document.getElementById('shadow').classList.remove('hide');
+             document.getElementById('editmodal').classList.remove('hide');
+             var row = $(ths).parent().prevAll();
+             var content = $(row[0]).text();
+             console.log(content);
+             $('#edittitle').val(content);
+             var contentid = $(row[1]).text();
+             $('#editid').val(contentid);
+             console.log(contentid);
+
+
+        }
+        function cancelmodal() {
+            document.getElementById('shadow').classList.add('hide');
+            document.getElementById('modal').classList.add('hide');
+            document.getElementById('editmodal').classList.add('hide');
+        }
+        function AjaxSend() {
+            $.ajax({
+                    url: '/modal_add_class/',
+                    type: 'POST',
+                    data: {'title': $("input[ name='title']").val()},
+                    success: function (data) {
+                        console.log(data);
+                        if (data == 'ok') {
+                            location.href='/classes/'
+                        } else {
+                            alert('添加失败');
+                        }
+                    }
+                }
+            )
+        }
+
+        function EditAjaxSend(){
+            var nid = $('#editid').val();
+            var content = $('#edittitle').val();
+            console.log(nid,content);
+
+            $.ajax({
+                url:'/modal_edit_class/',
+                type:'POST',
+                data:{
+                    'nid':nid,
+                    'content':content,
+                },
+
+                success:function(arg){
+                    alert('添加成功,建议刷新页面')
+
+            }
+
+
+                }
+            )
+
+
+        }
+
+    </script>
+
+        </div>
+
+
+
+
+
+
+    </div>
+</body>
+</html>
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title></title>#}
+{#    <!-- CSS only -->#}
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" integrity="sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX" crossorigin="anonymous">#}
+{#    <!-- JS, Popper.js, and jQuery -->#}
+{#    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>#}
+{#    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>#}
+{#    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>#}
+{#    <style>#}
+{#        body{#}
+{#            background-color: ghostwhite;#}
+{#        }#}
+{#        .hide{#}
+{#            display: none;#}
+{#        }#}
+{##}
+{##}
+{##}
+{#        .shadow{#}
+{#            position: fixed;#}
+{#            left: 0;#}
+{#            top: 0;#}
+{#            right: 0;#}
+{#            bottom: 0;#}
+{#            background: black;#}
+{#            opacity: 0.4;#}
+{#            z-index: 999;#}
+
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#<h1 style="text-align: center"> 学生管理系统 <span class="badge badge-secondary"></span></h1>#}
+{#<div class="alert alert-primary" role="alert">#}
+{#  班级列表#}
+{#    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;#}
+{#    <a href=""><button type="button" class="btn btn-secondary">添加</button></a>#}
+{#    <a onclick="showModal();"><button type="button" class="btn btn-secondary">显示对话框</button></a>#}
+{#</div>#}
+{#    <div style="display: flex; justify-content: space-around">#}
+{#    <h1>班级列表</h1>#}
+{#    <div>#}
+{#        <button type="button" class="btn btn-danger"> <a href="/add_class/" style="color: white">添加</a></button>#}
+{##}
+{#    </div>#}
+{##}
+{#    <div id="list-example" class="list-group" style="width: 20%">#}
+{#        <a class="list-group-item list-group-item-action" href="http://127.0.0.1:8000/classes/">班级表</a>#}
+{#        <a class="list-group-item list-group-item-action" href="/add_class">班级增加表</a>#}
+{#        <a class="list-group-item list-group-item-action" href="http://127.0.0.1:8000/student/">学生表</a>#}
+{#        <a class="list-group-item list-group-item-action" href="http://127.0.0.1:8000/add_student/">学生增加表</a>#}
+{#</div>#}
+{##}
+{#    <table style="width: 30%" class="table table-striped table-bordered table-hover">#}
+{#    <div>#}
+{#        <button type="button" class="btn btn-primary"> <a href="/add_class/" style="color: white">添加</a></button>#}
+{##}
+{#    </div>#}
+{#        <thead>#}
+{##}
+{#            <tr>#}
+{#                <th>ID</th>#}
+{#                <th>班级名称</th>#}
+{#                <th>操作</th>#}
+{#            </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#            {% for row in class_list %}#}
+{#                <tr>#}
+{#                    <td>{{ row.class_id }}</td>#}
+{#                    <td>{{ row.title }}</td>#}
+{#                    <td>#}
+{#                        <a href="/del_class/?nid={{ row.class_id }}"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">#}
+{#  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>#}
+{#  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>#}
+{#</svg></a>#}
+{#                        |#}
+{#                        &nbsp;<a href="#" onclick="modelEdit(this);"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-brush" fill="currentColor" xmlns="http://www.w3.org/2000/svg">#}
+{#  <path d="M15.213 1.018a.572.572 0 0 1 .756.05.57.57 0 0 1 .057.746C15.085 3.082 12.044 7.107 9.6 9.55c-.71.71-1.42 1.243-1.952 1.596-.508.339-1.167.234-1.599-.197-.416-.416-.53-1.047-.212-1.543.346-.542.887-1.273 1.642-1.977 2.521-2.35 6.476-5.44 7.734-6.411z"/>#}
+{#  <path d="M7 12a2 2 0 0 1-2 2c-1 0-2 0-3.5-.5s.5-1 1-1.5 1.395-2 2.5-2a2 2 0 0 1 2 2z"/>#}
+{#</svg></a>#}
+{#                         <a href="/edit_class/?nid={{ row.class_id }}">编辑</a>#}
+{#                        ｜#}
+{#                        <a href="#" onclick="showModal();"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">#}
+{#  <path fill-rule="evenodd" d="M4 1h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H4z"/>#}
+{#  <path fill-rule="evenodd" d="M8 5.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V10a.5.5 0 0 1-1 0V8.5H6a.5.5 0 0 1 0-1h1.5V6a.5.5 0 0 1 .5-.5z"/>#}
+{#</svg></a>#}
+{#                    </td>#}
+{##}
+{##}
+{#                </tr>#}
+{#            {% endfor %}#}
+{#        </tbody>#}
+{##}
+{#    </table>#}
+{#    </div>#}
+{##}
+{##}
+{##}
+{#    <div id="modal" class="hide" style="position:fixed;background-color: white;height: 300px; width: 300px;left: 50%;#}
+{#            top: 50%;margin-top: -100px;margin-left: -100px;border: solid 1px black;z-index: 1000;">#}
+{#        <h3 style="text-align: center">#}
+{#            添加框#}
+{#        </h3>#}
+{#        <p></p>#}
+{#        <form method="POST" action="/modal_add_class/">#}
+{#        <p>#}
+{#        班级名: <input type="text" name="title">#}
+{##}
+{#        </p>#}
+{##}
+{#            <input type="button" value="提交" onclick="AjaxSend();">#}
+{##}
+{#            <input type="button" value="取消" onclick="cancelmodal();" >#}
+{#        </form>#}
+{#    </div>#}
+{#    <div id="shadow" class="shadow hide" ></div>#}
+{##}
+{#     <div id="editmodal" class="hide" style="position:fixed;background-color: white;height: 300px; width: 300px;margin-top: -100px;left: 50%;#}
+{#            top: 50%;margin-left: -100px;border: solid 1px black;z-index: 1000;">#}
+{#         <h3 style="text-align: center">编辑框</h3>#}
+{#        <p></p>#}
+{#        <form method="POST" action="/modal_add_class/">#}
+{#        <p>#}
+{#            <input id="editid" type="text" name="id" style="display: none">#}
+{#            班级名: <input id="edittitle" type="text" name="edittitle">#}
+{##}
+{#        </p>#}
+{##}
+{#            <input type="button" value="提交" onclick="EditAjaxSend();">#}
+{#        </form>#}
+{##}
+{#            <input type="button" value="取消" onclick="cancelmodal();" >#}
+{#    </div>#}
+{##}
+{##}
+{##}
+{##}
+{#</body>#}
+{#    <script src="/static/jquery.js"></script>#}
+{#    <script>#}
+{#        function showModal() {#}
+{#            document.getElementById('shadow').classList.remove('hide');#}
+{#            document.getElementById('modal').classList.remove('hide');#}
+{##}
+{#        }#}
+{##}
+{#        function modelEdit(ths) {#}
+{#             document.getElementById('shadow').classList.remove('hide');#}
+{#             document.getElementById('editmodal').classList.remove('hide');#}
+{#             var row = $(ths).parent().prevAll();#}
+{#             var content = $(row[0]).text();#}
+{#             console.log(content);#}
+{#             $('#edittitle').val(content);#}
+{#             var contentid = $(row[1]).text();#}
+{#             $('#editid').val(contentid);#}
+{#             console.log(contentid);#}
+{##}
+{##}
+{#        }#}
+{#        function cancelmodal() {#}
+{#            document.getElementById('shadow').classList.add('hide');#}
+{#            document.getElementById('modal').classList.add('hide');#}
+{#            document.getElementById('editmodal').classList.add('hide');#}
+{#        }#}
+{#        function AjaxSend() {#}
+{#            $.ajax({#}
+{#                    url: '/modal_add_class/',#}
+{#                    type: 'POST',#}
+{#                    data: {'title': $("input[ name='title']").val()},#}
+{#                    success: function (data) {#}
+{#                        console.log(data);#}
+{#                        if (data == 'ok') {#}
+{#                            location.href='/classes/'#}
+{#                        } else {#}
+{#                            alert('添加失败');#}
+{#                        }#}
+{#                    }#}
+{#                }#}
+{#            )#}
+{#        }#}
+{##}
+{#        function EditAjaxSend(){#}
+{#            var nid = $('#editid').val();#}
+{#            var content = $('#edittitle').val();#}
+{#            console.log(nid,content);#}
+{##}
+{#            $.ajax({#}
+{#                url:'/modal_edit_class/',#}
+{#                type:'POST',#}
+{#                data:{#}
+{#                    'nid':nid,#}
+{#                    'content':content,#}
+{#                },#}
+{##}
+{#                success:function(arg){#}
+{#                    alert('添加成功,建议刷新页面')#}
+{##}
+{#            }#}
+{##}
+{##}
+{#                }#}
+{#            )#}
+{##}
+{##}
+{#        }#}
+{##}
+{#    </script>#}
+{#</html>#}
